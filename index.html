@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Стартовая страница</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Nunito:wght@800&display=swap" rel="stylesheet">
+<style>
+@property --c1{syntax:'<color>';inherits:true;initial-value:#f7c4dd}
+@property --c2{syntax:'<color>';inherits:true;initial-value:#f9d3b4}
+@property --c3{syntax:'<color>';inherits:true;initial-value:#cdb8f0}
+@property --c4{syntax:'<color>';inherits:true;initial-value:#ffe1c8}
+@property --ink{syntax:'<color>';inherits:true;initial-value:#3b2f3a}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;overflow:hidden;font-family:-apple-system,'SF Pro Display',Inter,'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--c1);transition:--c1 1.6s,--c2 1.6s,--c3 1.6s,--c4 1.6s,--ink 1.6s}
+.bg{position:fixed;inset:0;overflow:hidden}
+.bg i{position:absolute;width:70vmax;height:70vmax;border-radius:50%;filter:blur(50px);opacity:.9}
+.bg i:nth-child(1){left:-20vmax;top:-25vmax;background:radial-gradient(circle,var(--c2) 0,transparent 65%);animation:a1 34s ease-in-out infinite alternate}
+.bg i:nth-child(2){right:-25vmax;top:-10vmax;background:radial-gradient(circle,var(--c3) 0,transparent 65%);animation:a2 41s ease-in-out infinite alternate}
+.bg i:nth-child(3){left:5vmax;bottom:-35vmax;background:radial-gradient(circle,var(--c4) 0,transparent 65%);animation:a3 37s ease-in-out infinite alternate}
+.bg i:nth-child(4){right:-10vmax;bottom:-30vmax;background:radial-gradient(circle,var(--c1) 0,transparent 65%);animation:a4 45s ease-in-out infinite alternate}
+@keyframes a1{to{transform:translate(18vmax,14vmax) scale(1.2)}}
+@keyframes a2{to{transform:translate(-16vmax,18vmax) scale(.9)}}
+@keyframes a3{to{transform:translate(20vmax,-12vmax) scale(1.15)}}
+@keyframes a4{to{transform:translate(-18vmax,-16vmax) scale(1.25)}}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+main{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px}
+.date{margin:0;font-size:clamp(17px,2vw,22px);font-weight:500;opacity:.75}
+time{display:block;font-size:clamp(84px,15vw,168px);line-height:1;font-variant-numeric:tabular-nums;padding:.04em .08em}
+body[data-c=round] time{font-family:Nunito,-apple-system,'SF Pro Rounded',system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;color:transparent;background:linear-gradient(180deg,var(--ink) 15%,color-mix(in srgb,var(--ink) 40%,transparent) 100%);-webkit-background-clip:text;background-clip:text}
+.col{display:inline-block;animation:br 3.2s ease-in-out infinite}
+@keyframes br{50%{opacity:.3}}
+.wx{margin:2px 0 26px;font-size:17px;font-weight:400;opacity:.7}
+.glass{background:rgba(255,255,255,.22);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(255,255,255,.12),0 10px 36px rgba(40,20,60,.12)}
+form{position:relative;z-index:5;width:min(520px,92vw);transition:width .55s cubic-bezier(.2,1.1,.3,1)}
+form:focus-within{width:min(680px,94vw)}
+.bar{display:flex;align-items:center;gap:12px;border-radius:999px;padding:6px 8px 6px 20px}
+.bar svg{flex:none;width:18px;height:18px;opacity:.6}
+.bar input{flex:1;min-width:0;border:0;background:transparent;font-weight:400;font-size:18px;font-family:inherit;color:var(--ink);outline:none;padding:11px 0}
+.bar input::placeholder{color:var(--ink);opacity:.55}
+.eb{flex:none;display:flex;align-items:center;gap:4px;border:0;border-radius:999px;background:rgba(255,255,255,.3);color:var(--ink);padding:6px 10px 6px 7px;cursor:pointer;transition:background .2s}
+.eb:hover,.eb[aria-expanded=true]{background:rgba(255,255,255,.5)}
+.ico{width:22px;height:22px;display:block}
+.chev{width:12px;height:12px;opacity:.6;transition:transform .35s cubic-bezier(.2,1.1,.3,1)}
+.eb[aria-expanded=true] .chev{transform:rotate(180deg)}
+.pop{position:absolute;right:0;top:calc(100% + 10px);z-index:20;width:236px;padding:8px;border-radius:22px;background:rgba(255,255,255,.58);transform-origin:calc(100% - 34px) 0;opacity:0;visibility:hidden;pointer-events:none;transform:scale(.88) translateY(-8px);transition:transform .38s cubic-bezier(.2,1.2,.3,1),opacity .2s,visibility 0s .38s}
+.pop.open{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:transform .38s cubic-bezier(.2,1.2,.3,1),opacity .2s,visibility 0s}
+.pt{padding:8px 12px 6px;font-size:12px;font-weight:500;opacity:.6}
+.pop button{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:14px;background:transparent;color:var(--ink);font:400 15px inherit;font-family:inherit;padding:9px 12px;cursor:pointer;text-align:left}
+.pop button:hover,.pop button:focus-visible{background:rgba(255,255,255,.55)}
+.pop button span{flex:1}
+.pop .ok{width:14px;height:14px;opacity:0}
+.pop button[aria-checked=true] .ok{opacity:.8}
+.dock{display:flex;align-items:flex-end;gap:12px;margin-top:22px;padding:10px 14px;border-radius:26px}
+.dock a{position:relative;display:block;width:54px;height:54px;color:var(--ink);text-decoration:none}
+.dock a span{display:grid;place-items:center;width:100%;height:100%;transform-origin:50% 100%;transition:transform .18s cubic-bezier(.2,.8,.3,1);border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 4px 10px rgba(30,10,40,.22)}
+.dock svg{width:30px;height:30px}
+.dock em{color:var(--ink);position:absolute;left:50%;top:calc(100% + 20px);transform:translateX(-50%) translateY(-4px);font-style:normal;font-size:12px;font-weight:500;padding:4px 10px;border-radius:999px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+.dock a:hover em,.dock a:focus-visible em{opacity:1;transform:translateX(-50%) translateY(0)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.in{animation:rise 1.1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.98);filter:blur(10px)}}
+@media(prefers-reduced-motion:reduce){.bg i,.in,.col{animation:none}form,.dock a span,.pop,.chev{transition:none}}
+</style>
+</head>
+<body data-c="round">
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="grain" aria-hidden="true"></div>
+<main>
+<p class="date in" id="d" style="animation-delay:.05s"></p>
+<time class="in" id="t" style="animation-delay:.15s">14:22</time>
+<p class="wx in" id="wx" style="animation-delay:.25s"></p>
+<form id="f" class="in" style="animation-delay:.4s">
+<div class="bar glass">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.500-3.500"/></svg>
+<input id="q" type="text" placeholder="Найти в интернете" aria-label="Поиск" autofocus>
+<button id="e" class="eb" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Выбрать поисковик"><span class="cur"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#de5833"/><text x="12" y="17" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#fff">D</text></svg></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+</div>
+<div class="pop glass" id="pop" role="menu">
+<div class="pt">Искать в:</div>
+<button type="button" role="menuitemradio" aria-checked="true" data-u="https://duckduckgo.com/?q="><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#de5833"/><text x="12" y="17" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#fff">D</text></svg><span>DuckDuckGo</span><svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.500 4.500 4.500L19 7"/></svg></button>
+<button type="button" role="menuitemradio" aria-checked="false" data-u="https://www.google.com/search?q="><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#fff"/><text x="12" y="17.5" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#4285f4">G</text></svg><span>Google</span><svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.500 4.500 4.500L19 7"/></svg></button>
+<button type="button" role="menuitemradio" aria-checked="false" data-u="https://ru.wikipedia.org/w/index.php?search="><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#fff"/><text x="12" y="17" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="14" fill="#222">W</text></svg><span>Википедия</span><svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.500 4.500 4.500L19 7"/></svg></button>
+</div>
+</form>
+<nav class="dock glass in" id="dock" style="animation-delay:.55s" aria-label="Быстрые ссылки"></nav>
+</main>
+<script>var P=[[0,'#1b1b3a','#3a2a5c','#2d3a6b','#5a3a6e'],[5,'#1f1f44','#3d2d63','#2f3f75','#60406f'],[7,'#f7c4dd','#f9d3b4','#cdb8f0','#ffe1c8'],[13,'#ffd9a8','#f6c1d6','#bfe0f5','#fff0d0'],[18,'#ffcfa0','#f4b0c4','#c8b6f0','#ffe3c0'],[20,'#f4a8b8','#c9a7ec','#ffc9a0','#9fa8f0'],[22,'#2a2450','#4a3070','#3a3f80','#6a4478'],[24,'#1b1b3a','#3a2a5c','#2d3a6b','#5a3a6e']];
+function rgb(h){return[1,3,5].map(function(i){return parseInt(h.substr(i,2),16)})}
+function mix(a,b,t){return a.map(function(v,i){return Math.round(v+(b[i]-v)*t)})}
+function css(c){return'rgb('+c.join(',')+')'}
+function lum(c){return(0.2126*c[0]+0.7152*c[1]+0.0722*c[2])/255}
+function paint(h){var i=0;while(i<P.length-2&&h>=P[i+1][0])i++;var a=P[i],b=P[i+1],t=Math.min(1,Math.max(0,(h-a[0])/(b[0]-a[0])));
+var cs=[1,2,3,4].map(function(k){return mix(rgb(a[k]),rgb(b[k]),t)});
+var L=cs.reduce(function(s,c){return s+lum(c)},0)/4;var k=Math.min(1,Math.max(0,(0.5-L)/0.18));
+var ink=mix([59,47,58],[248,243,252],k);var st=document.body.style;
+cs.forEach(function(c,j){st.setProperty('--c'+(j+1),css(c))});st.setProperty('--ink',css(ink));}
+
+// ===== НАСТРОЙКИ =====
+var CITY='Владимир',LAT=56.13,LON=40.41;
+var LINKS=[
+{n:'GitHub',u:'https://github.com',i:'github'},
+{n:'YouTube',u:'https://www.youtube.com',i:'youtube'},
+{n:'Spotify',u:'https://open.spotify.com',i:'spotify'},
+{n:'Obsidian',u:'https://obsidian.md',i:'obsidian'},
+{n:'Slack',u:'https://slack.com',i:'slack'}
+// Новый сайт: добавьте строку вида {n:'Stepik',u:'https://stepik.org'} (не забудьте запятую перед ней)
+];
+// =====================
+var ICONS={"github": {"bg": "#24292f", "svg": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#fff\" d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"/></svg>"}, "youtube": {"bg": "#fff", "svg": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"1\" y=\"4.5\" width=\"22\" height=\"15\" rx=\"4.5\" fill=\"#f00\"/><path d=\"M10 8.7v6.6l5.7-3.3z\" fill=\"#fff\"/></svg>"}, "spotify": {"bg": "#1db954", "svg": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#fff\" stroke-linecap=\"round\"><path d=\"M4.5 9c4.700-1.300 9.300-1 13.700 1.500\" stroke-width=\"2.200\"/><path d=\"M5.500 12.800c3.900-1.100 7.700-.8 11.200 1.300\" stroke-width=\"1.900\"/><path d=\"M6.400 16.100c3.200-.9 6.200-.6 9 1\" stroke-width=\"1.600\"/></g></svg>"}, "obsidian": {"bg": "#2a2140", "svg": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M14.500 1.500 6 5.500 3.500 13l3.300 8.500L14 23l6-6-2-9z\" fill=\"#7c5cdb\"/><path d=\"M14.500 1.500 17.900 8 12 10.500 6 5.500z\" fill=\"#a78bfa\"/><path d=\"M12 10.500 20 17l-6 6z\" fill=\"#5b3fb8\"/></svg>"}, "slack": {"bg": "#fff", "svg": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g stroke-linecap=\"round\" stroke-width=\"3.400\"><path d=\"M9 3v7\" stroke=\"#36c5f0\"/><path d=\"M14 20v-7\" stroke=\"#2eb67d\"/><path d=\"M4 14h7\" stroke=\"#ecb22e\"/><path d=\"M13 9h7\" stroke=\"#e01e5a\"/></g></svg>"}};
+function pad(x){return String(x).padStart(2,'0')}
+var T=document.getElementById('t'),D=document.getElementById('d'),lastT='';
+var fake=/^#\d/.test(location.hash)?parseFloat(location.hash.slice(1)):null; // #20 в адресе = предпросмотр 20:00
+function tick(){var n=new Date(),hh=n.getHours(),mm=n.getMinutes();
+if(fake!==null){hh=Math.floor(fake);mm=Math.floor((fake-hh)*60);}
+var ts=pad(hh)+':'+pad(mm);
+if(ts!==lastT){lastT=ts;T.innerHTML=ts.replace(':','<span class="col">:</span>');}
+var g=hh<6?'Не спится?':hh<12?'Доброе утро':hh<18?'Добрый день':'Добрый вечер';
+D.textContent=g+' · '+n.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+paint(hh+mm/60);}
+tick();setInterval(tick,20000);
+var eb=document.getElementById('e'),pop=document.getElementById('pop'),items=pop.querySelectorAll('button'),cur=items[0].dataset.u;
+function setOpen(o){pop.classList.toggle('open',o);eb.setAttribute('aria-expanded',o?'true':'false');if(o){var c=pop.querySelector('[aria-checked=true]');if(c)c.focus();}}
+eb.addEventListener('click',function(){setOpen(!pop.classList.contains('open'));});
+items.forEach(function(b){b.addEventListener('click',function(){cur=b.dataset.u;items.forEach(function(x){x.setAttribute('aria-checked',x===b?'true':'false')});
+eb.querySelector('.cur').innerHTML=b.querySelector('.ico').outerHTML;setOpen(false);eb.focus();document.getElementById('q').focus();});});
+document.addEventListener('click',function(e){if(!pop.contains(e.target)&&!eb.contains(e.target))setOpen(false);});
+document.addEventListener('keydown',function(e){if(!pop.classList.contains('open'))return;
+if(e.key==='Escape'){setOpen(false);eb.focus();}
+if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();var l=Array.prototype.slice.call(items),i=l.indexOf(document.activeElement);i=(i+(e.key==='ArrowDown'?1:-1)+l.length)%l.length;l[i].focus();}});
+document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();var v=document.getElementById('q').value.trim();if(v){window.open(cur+encodeURIComponent(v),'_blank');}});
+
+var dock=document.getElementById('dock');
+LINKS.forEach(function(l){var a=document.createElement('a');a.href=l.u;
+var ic=ICONS[l.i],sp=document.createElement('span');
+if(ic){sp.style.background=ic.bg;sp.innerHTML=ic.svg;}
+else{sp.style.background='#fff';var im=new Image();im.width=32;im.height=32;im.alt='';im.style.borderRadius='7px';
+im.src='https://icons.duckduckgo.com/ip3/'+new URL(l.u).hostname+'.ico';sp.appendChild(im);}
+var em=document.createElement('em');em.className='glass';em.textContent=l.n;
+a.appendChild(sp);a.appendChild(em);dock.appendChild(a);});
+var ic=dock.querySelectorAll('a span');
+if(window.matchMedia('(pointer:fine)').matches){
+dock.addEventListener('mousemove',function(e){ic.forEach(function(sp){var r=sp.getBoundingClientRect(),d=e.clientX-(r.left+r.width/2),k=1+0.55*Math.exp(-Math.pow(d/70,2));sp.style.transform='scale('+k.toFixed(3)+')'})});
+dock.addEventListener('mouseleave',function(){ic.forEach(function(sp){sp.style.transform=''})});}
+var WX=document.getElementById('wx');
+function wxText(c){if(c===0)return'ясно';if(c<=2)return'переменная облачность';if(c===3)return'пасмурно';if(c<=48)return'туман';if(c<=57)return'морось';if(c<=67)return'дождь';if(c<=77)return'снег';if(c<=82)return'ливень';if(c<=86)return'снегопад';return'гроза';}
+function showWx(t,c){var r=Math.round(t);WX.textContent=(r>0?'+':'')+r+'° · '+CITY+' · '+wxText(c);}
+WX.textContent=CITY;
+try{var cw=JSON.parse(localStorage.getItem('wx')||'null');if(cw)showWx(cw.t,cw.c);}catch(e){}
+fetch('https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&current=temperature_2m,weather_code&timezone=auto')
+.then(function(r){return r.json()}).then(function(j){var t=j.current.temperature_2m,c=j.current.weather_code;showWx(t,c);
+try{localStorage.setItem('wx',JSON.stringify({t:t,c:c}));}catch(e){}}).catch(function(){});
+</script>
+</body>
+</html>
